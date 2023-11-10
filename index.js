@@ -1,425 +1,154 @@
-// Function called whenever user tab on any box
-function myfunc() {
+const board = document.getElementById('board');
+const cells = document.querySelectorAll('[data-cell]');
+const message = document.getElementById('message');
+const resetButton = document.getElementById('reset');
 
-	// Setting DOM to all boxes or input field
-	var b1, b2, b3, b4, b5, b6, b7, b8, b9;
-	b1 = document.getElementById("b1").value;
-	b2 = document.getElementById("b2").value;
-	b3 = document.getElementById("b3").value;
-	b4 = document.getElementById("b4").value;
-	b5 = document.getElementById("b5").value;
-	b6 = document.getElementById("b6").value;
-	b7 = document.getElementById("b7").value;
-	b8 = document.getElementById("b8").value;
-	b9 = document.getElementById("b9").value;
+let currentPlayer = 'X';
+let computerPlayer = 'O';
+let gameBoard = ['', '', '', '', '', '', '', '', ''];
+let gameActive = true;
 
-	var b1btn, b2btn, b3btn, b4btn, b5btn,
-		b6btn, b7btn, b8btn, b9btn;
-		
-	b1btn = document.getElementById("b1");
-	b2btn = document.getElementById("b2");
-	b3btn = document.getElementById("b3");
-	b4btn = document.getElementById("b4");
-	b5btn = document.getElementById("b5");
-	b6btn = document.getElementById("b6");
-	b7btn = document.getElementById("b7");
-	b8btn = document.getElementById("b8");
-	b9btn = document.getElementById("b9");
+function handleCellClick(e) {
+    const cell = e.target;
+    const cellIndex = Array.from(cells).indexOf(cell);
 
-	// Checking if Player X won or not and after
-	// that disabled all the other fields
-	if ((b1 == 'x' || b1 == 'X') && (b2 == 'x' ||
-		b2 == 'X') && (b3 == 'x' || b3 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
+    if (gameBoard[cellIndex] !== '' || !gameActive) return;
 
-		b1btn.style.color = "red";
-		b2btn.style.color = "red";
-		b3btn.style.color = "red";
-	}
-	else if ((b1 == 'x' || b1 == 'X') && (b4 == 'x' ||
-		b4 == 'X') && (b7 == 'x' || b7 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
+    makeMove(cellIndex, currentPlayer);
 
-		b1btn.style.color = "red";
-		b4btn.style.color = "red";
-		b7btn.style.color = "red";
-	}
-	else if ((b7 == 'x' || b7 == 'X') && (b8 == 'x' ||
-		b8 == 'X') && (b9 == 'x' || b9 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-
-		b7btn.style.color = "red";
-		b8btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b3 == 'x' || b3 == 'X') && (b6 == 'x' ||
-		b6 == 'X') && (b9 == 'x' || b9 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-
-		b3btn.style.color = "red";
-		b6btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b1 == 'x' || b1 == 'X') && (b5 == 'x' ||
-		b5 == 'X') && (b9 == 'x' || b9 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-
-		b1btn.style.color = "red";
-		b5btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b3 == 'x' || b3 == 'X') && (b5 == 'x' ||
-		b5 == 'X') && (b7 == 'x' || b7 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b3btn.style.color = "red";
-		b5btn.style.color = "red";
-		b7btn.style.color = "red";
-	}
-	else if ((b2 == 'x' || b2 == 'X') && (b5 == 'x' ||
-		b5 == 'X') && (b8 == 'x' || b8 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b9btn.disabled = true;
-
-		b2btn.style.color = "red";
-		b5btn.style.color = "red";
-		b8btn.style.color = "red";
-	}
-	else if ((b4 == 'x' || b4 == 'X') && (b5 == 'x' ||
-		b5 == 'X') && (b6 == 'x' || b6 == 'X')) {
-		document.getElementById('print')
-			.innerHTML = "Player X won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b4btn.style.color = "red";
-		b5btn.style.color = "red";
-		b6btn.style.color = "red";
-	}
-
-	// Checking of Player X finish
-	// Checking for Player 0 starts, Is player 0 won or
-	// not and after that disabled all the other fields
-	else if ((b1 == '0' || b1 == '0') && (b2 == '0' ||
-		b2 == '0') && (b3 == '0' || b3 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b1btn.style.color = "red";
-		b2btn.style.color = "red";
-		b3btn.style.color = "red";
-	}
-	else if ((b1 == '0' || b1 == '0') && (b4 == '0' ||
-		b4 == '0') && (b7 == '0' || b7 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b1btn.style.color = "red";
-		b4btn.style.color = "red";
-		b7btn.style.color = "red";
-	}
-	else if ((b7 == '0' || b7 == '0') && (b8 == '0' ||
-		b8 == '0') && (b9 == '0' || b9 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b6btn.disabled = true;
-
-		b7btn.style.color = "red";
-		b8btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b3 == '0' || b3 == '0') && (b6 == '0' ||
-		b6 == '0') && (b9 == '0' || b9 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b4btn.disabled = true;
-		b5btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-		b3btn.style.color = "red";
-		b6btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b1 == '0' || b1 == '0') && (b5 == '0' ||
-		b5 == '0') && (b9 == '0' || b9 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-
-		b1btn.style.color = "red";
-		b5btn.style.color = "red";
-		b9btn.style.color = "red";
-	}
-	else if ((b3 == '0' || b3 == '0') && (b5 == '0' ||
-		b5 == '0') && (b7 == '0' || b7 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b3btn.style.color = "red";
-		b5btn.style.color = "red";
-		b7btn.style.color = "red";
-	}
-	else if ((b2 == '0' || b2 == '0') && (b5 == '0' ||
-		b5 == '0') && (b8 == '0' || b8 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b1btn.disabled = true;
-		b3btn.disabled = true;
-		b4btn.disabled = true;
-		b6btn.disabled = true;
-		b7btn.disabled = true;
-		b9btn.disabled = true;
-
-		b2btn.style.color = "red";
-		b5btn.style.color = "red";
-		b8btn.style.color = "red";
-	}
-	else if ((b4 == '0' || b4 == '0') && (b5 == '0' ||
-		b5 == '0') && (b6 == '0' || b6 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Player 0 won";
-		b1btn.disabled = true;
-		b2btn.disabled = true;
-		b3btn.disabled = true;
-		b7btn.disabled = true;
-		b8btn.disabled = true;
-		b9btn.disabled = true;
-
-		b4btn.style.color = "red";
-		b5btn.style.color = "red";
-		b6btn.style.color = "red";
-	}
-
-	// Checking of Player 0 finish
-	// Here, Checking about Tie
-	else if ((b1 == 'X' || b1 == '0') && (b2 == 'X'
-		|| b2 == '0') && (b3 == 'X' || b3 == '0') &&
-		(b4 == 'X' || b4 == '0') && (b5 == 'X' ||
-			b5 == '0') && (b6 == 'X' || b6 == '0') &&
-		(b7 == 'X' || b7 == '0') && (b8 == 'X' ||
-			b8 == '0') && (b9 == 'X' || b9 == '0')) {
-		document.getElementById('print')
-			.innerHTML = "Match Tie";
-	}
-	else {
-
-		// Here, Printing Result
-		if (flag == 1) {
-			document.getElementById('print')
-				.innerHTML = "Player X Turn";
-		}
-		else {
-			document.getElementById('print')
-				.innerHTML = "Player 0 Turn";
-		}
-	}
+    if (checkWinner(gameBoard) === currentPlayer) {
+        message.textContent = 'You win!';
+        gameActive = false;
+    } else if (gameBoard.includes('')) {
+        currentPlayer = 'X';
+        setTimeout(computerMove, 500); // Delay the computer's move for a better user experience
+    } else {
+        message.textContent = 'It\'s a draw!';
+        gameActive = false;
+    }
 }
 
-// Function to reset game
-function myfunc_2() {
-	location.reload();
+function computerMove() {
+    const emptyCells = gameBoard.reduce((acc, cell, index) => {
+        if (cell === '') {
+            acc.push(index);
+        }
+        return acc;
+    }, []);
+
+    if (emptyCells.length > 0) {
+        const bestMove = getBestMove();
+        makeMove(bestMove, computerPlayer);
+    }
+
+    if (checkWinner(gameBoard) === computerPlayer) {
+        message.textContent = 'Computer wins!';
+        gameActive = false;
+    } else if (!gameBoard.includes('')) {
+        message.textContent = 'It\'s a draw!';
+        gameActive = false;
+    }
 }
 
-// Here onwards, functions check turn of the player
-// and put accordingly value X or 0
-flag = 1;
-function myfunc_3() {
-	if (flag == 1) {
-		document.getElementById("b1").value = "X";
-		document.getElementById("b1").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b1").value = "0";
-		document.getElementById("b1").disabled = true;
-		flag = 1;
-	}
+function getBestMove() {
+    let bestScore = -Infinity;
+    let bestMove = null;
+
+    for (let i = 0; i < gameBoard.length; i++) {
+        if (gameBoard[i] === '') {
+            gameBoard[i] = computerPlayer;
+            let score = minimax(gameBoard, 0, false);
+            gameBoard[i] = '';
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return bestMove;
 }
 
-function myfunc_4() {
-	if (flag == 1) {
-		document.getElementById("b2").value = "X";
-		document.getElementById("b2").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b2").value = "0";
-		document.getElementById("b2").disabled = true;
-		flag = 1;
-	}
+function minimax(board, depth, isMaximizing) {
+    const scores = {
+        X: -1,
+        O: 1,
+        draw: 0
+    };
+
+    let result = checkWinner(board);
+    if (result !== null) {
+        return scores[result];
+    }
+
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = computerPlayer;
+                let score = minimax(board, depth + 1, false);
+                board[i] = '';
+                bestScore = Math.max(score, bestScore);
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = currentPlayer;
+                let score = minimax(board, depth + 1, true);
+                board[i] = '';
+                bestScore = Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
+    }
 }
 
-function myfunc_5() {
-	if (flag == 1) {
-		document.getElementById("b3").value = "X";
-		document.getElementById("b3").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b3").value = "0";
-		document.getElementById("b3").disabled = true;
-		flag = 1;
-	}
+function checkWinner(board) {
+    const winPatterns = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    for (const pattern of winPatterns) {
+        const [a, b, c] = pattern;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return board[a];
+        }
+    }
+
+    if (board.includes('')) {
+        return null;
+    } else {
+        return 'draw';
+    }
 }
 
-function myfunc_6() {
-	if (flag == 1) {
-		document.getElementById("b4").value = "X";
-		document.getElementById("b4").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b4").value = "0";
-		document.getElementById("b4").disabled = true;
-		flag = 1;
-	}
+function makeMove(index, player) {
+    gameBoard[index] = player;
+    cells[index].textContent = player;
+    cells[index].classList.add(player);
 }
 
-function myfunc_7() {
-	if (flag == 1) {
-		document.getElementById("b5").value = "X";
-		document.getElementById("b5").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b5").value = "0";
-		document.getElementById("b5").disabled = true;
-		flag = 1;
-	}
+function handleResetClick() {
+    gameBoard = ['', '', '', '', '', '', '', '', ''];
+    gameActive = true;
+    currentPlayer = 'X';
+    message.textContent = 'You are X, it\'s your turn';
+    cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('X', 'O');
+    });
 }
 
-function myfunc_8() {
-	if (flag == 1) {
-		document.getElementById("b6").value = "X";
-		document.getElementById("b6").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b6").value = "0";
-		document.getElementById("b6").disabled = true;
-		flag = 1;
-	}
-}
-
-function myfunc_9() {
-	if (flag == 1) {
-		document.getElementById("b7").value = "X";
-		document.getElementById("b7").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b7").value = "0";
-		document.getElementById("b7").disabled = true;
-		flag = 1;
-	}
-}
-
-function myfunc_10() {
-	if (flag == 1) {
-		document.getElementById("b8").value = "X";
-		document.getElementById("b8").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b8").value = "0";
-		document.getElementById("b8").disabled = true;
-		flag = 1;
-	}
-}
-
-function myfunc_11() {
-	if (flag == 1) {
-		document.getElementById("b9").value = "X";
-		document.getElementById("b9").disabled = true;
-		flag = 0;
-	}
-	else {
-		document.getElementById("b9").value = "0";
-		document.getElementById("b9").disabled = true;
-		flag = 1;
-	}
-}
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+resetButton.addEventListener('click', handleResetClick);
