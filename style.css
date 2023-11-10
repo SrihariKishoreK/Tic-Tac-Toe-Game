@@ -1,113 +1,61 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+}
+
 h1 {
-	color: orangered;
-	margin-bottom: -5px;
-}
-p {
-	margin-bottom: -10px;
-}
-.ui {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.row {
-	display: flex;
-}
-.cell {
-	border: none;
-	width: 80px;
-	height: 80px;
-	display: flex; 
-	align-items: center;
-	justify-content: center;
-	font-size: 24px;
-	text-align: center;
-	cursor: pointer;
-}
-.cell:active {
-	outline: none;
-}
-/* 3*3 Grid */
-#b1{
-	border-bottom: 1px solid gray;
-	border-right: 1px solid gray;
+    font-size: 36px;
+    color: #14a33f;
 }
 
-#b2 {
-	border-bottom: 1px solid gray;
-	border-right: 1px solid gray;
-	border-left: 1px solid gray;
+.game-container {
+    text-align: center;
 }
 
-#b3 {
-	border-bottom: 1px solid gray;
-	border-left: 1px solid gray;
-}
-
-#b4 {
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	border-right: 1px solid gray;
-}
+.tic-tac-toe-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 10px;
+    margin: 20px auto;
 	
-#b5 {
-	border: 1px solid gray;
 }
 
-#b6 {
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	border-left: 1px solid gray;
+.cell {
+    width: 100px;
+	border-radius: 15px 15px 15px 15px;
+    height: 100px;
+	background-image: linear-gradient(to top right,#00ff62,#6deb9d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: #00ff62;
+    color: #000;
 }
 
-#b7 {
-	border-top: 1px solid gray;
-	border-right: 1px solid gray;
+.cell:hover {
+    background-color: #337443;
+}
+.message {
+    font-size: 24px;
+    margin: 20px 0;
+    color: rgb(0, 207, 45);
 }
 
-#b8 {
-	border-top: 1px solid gray;
-	border-right: 1px solid gray;
-	border-left: 1px solid gray;
-}
-
-#b9 {
-	border-top: 1px solid gray;
-	border-left: 1px solid gray;
-}
-/* Reset Button */
-#but {
-	box-sizing: border-box;
-	width: 95px;
-	height: 40px;
-	border: 1px solid dodgerblue;
-	margin-left: auto;
-	border-radius: 8px;
-	font-family: Verdana,
-		Geneva, Tahoma, sans-serif;
-
-	background-color: whitesmoke;
-	color: dodgerblue;
-	font-size: 20px;
-	cursor: pointer;
-}
-
-/* Player turn space */
-#print {
-	font-family: Verdana,
-		Geneva, Tahoma, sans-serif;
-	color: dodgerblue;
-	font-size: 20px;
-}
-
-/* Main Container */
-#main {
-	text-align: center;
-}
-
-/* Game Instruction Text */
-#ins {
-	font-family: Verdana,Geneva,
-					Tahoma, sans-serif;
-	color: rgb(90, 30, 255);
+.reset-button {
+    font-size: 20px;
+    padding: 10px 20px;
+	border-radius: 15px 15px 15px 15px;
+    color: #080808;
+    border: none;
+    cursor: pointer;
+	background-image: linear-gradient(360deg,#00ff62,#6deb9d);
 }
